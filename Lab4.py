@@ -112,7 +112,6 @@ opc = int(input("""
 3) Evaluar
 4) Salir
 """))
-rangos = x =None
 if(opc == 1):
     x = eval(input("Ingrese el rango [a,b]: "))
     graficar(x[0], x[1])
@@ -124,7 +123,6 @@ elif(opc == 3):
     rangos = valores(x[0], x[1])
     punto = eval(input("Ingrese el valor a evaluar: "))
     graficar(x[0], x[1], punto)
-    pass
 elif(opc == 4):
     exit()
 
