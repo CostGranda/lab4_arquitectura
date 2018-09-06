@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[92]:
+# In[2]:
 
 
 import matplotlib.pyplot as plt
@@ -20,6 +20,7 @@ LED3 = 26
 LED4 = 20
 
 def setup_leds():
+    """Configura los leds en modo salida"""
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(LED1, GPIO.OUT)
     GPIO.setup(LED2, GPIO.OUT)
@@ -27,12 +28,14 @@ def setup_leds():
     GPIO.setup(LED4, GPIO.OUT)
 
 def leds_off():
+    """Apaga todos los leds"""
     GPIO.output(LED1, GPIO.LOW)
     GPIO.output(LED2, GPIO.LOW)
     GPIO.output(LED3, GPIO.LOW)
     GPIO.output(LED4, GPIO.LOW)
     
 def led_on(led):
+    """Hace que el led recibido se encienda durante 3 segundos"""
     GPIO.output(led, GPIO.HIGH)
     print("Led ON")
     sleep(3)
@@ -41,19 +44,24 @@ def led_on(led):
     GPIO.cleanup()
 
 
-# In[3]:
+# In[15]:
 
 
+from math import pi
 def valores(a=-0.5, b=0.5):
-    x = np.arange(a, b, 0.02)
-    y = (np.tanh(3*x) - np.cos(3*x)/np.sin(3*x)) / (((2*x)/5) - 3*x) 
-    return {'x': x, 'y': y, 'puntos': b - a + 1}
+    """Recibe el intervalo a evaluar, devuelve un diccionario
+    con los valores en arrays y el delta del rango."""
+    x = np.arange(a, b, 0.02) # Array con pasos de 0.02
+    y = (np.tanh(3*x*2*pi) - np.cos(3*x*2*pi)/np.sin(3*x*2*pi)) / (((2*x)/5) - 3*x) #Función en radianes (2*pi)
+    return {'x': x, 'y': y, 'puntos': b - a + 1} # Diccionario con los arrays y el delta
 
 
-# In[66]:
+# In[16]:
 
 
 def cuadrantes(a, b, num, cant):
+    """Apaga los leds antes de iniciar cada cuadrante por seguridad, anuncia 
+    y enciende"""
     if(num<=a+cant):
         leds_off()
         print("Cuadrante 1")
@@ -72,25 +80,7 @@ def cuadrantes(a, b, num, cant):
         led_on(LED4)
 
 
-# In[118]:
-
-
-a = 10
-b = 30
-cant = (b-a) / 4
-print(cant)
-num = 25
-if(num<=a+cant):
-    print("Cuadrante 1")
-elif(num<=a+cant*2):
-    print("Cuadrante 2")
-elif(num<=a+cant*3):
-    print("Cuadrante 3")
-elif(num<=b):
-    print("Cuadrante 4")
-
-
-# In[106]:
+# In[19]:
 
 
 def graficar(a=1,b=1,x=None):
@@ -102,14 +92,18 @@ def graficar(a=1,b=1,x=None):
     for i in range(1,4):
         plt.axvline(x=a+delta*i, linestyle='--', color='g')
     plt.title("Grafica lab 4")
-    if x is not None:
-        y = (np.tanh(3*x) - np.cos(3*x)/np.sin(3*x)) / (((2*x)/5) - 3*x)
+    # Solo grafica el punto si se envia el parámetro X
+    if x is not None: 
+        y = (np.tanh(3*x*2*pi) - np.cos(3*x*2*pi)/np.sin(3*x*2*pi)) / (((2*x)/5) - 3*x)
+        # Señala con una flecha el punto evaluado
         plt.annotate("({},{:.1f})".format(x,y), xy=(x, y), xytext=(a+1, b+1),size=12, arrowprops=dict(arrowstyle='->'))
+        cuadrantes(a, b, x, delta)
+    # Fracción expresada con mathtext
     plt.text(b+1,a-1, r'$f(x)=\frac{tanh(3x) - cot(3x)} {\frac{2x}{5}-{3x}} $',
              color='g', fontsize=20)
 
 
-# In[107]:
+# In[ ]:
 
 
 opc = int(input("""
@@ -121,7 +115,6 @@ opc = int(input("""
 rangos = x =None
 if(opc == 1):
     x = eval(input("Ingrese el rango [a,b]: "))
-    #rangos = valores(x[0], x[1])
     graficar(x[0], x[1])
 elif(opc == 2):
     pass
