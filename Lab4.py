@@ -81,7 +81,7 @@ def cuadrantes(a, b, num, cant):
         led_on(LED4)
 
 
-# In[5]:
+# In[7]:
 
 
 def graficar(a=1,b=1,x=None):
@@ -102,9 +102,10 @@ def graficar(a=1,b=1,x=None):
     # Fracción expresada con mathtext
     plt.text(b+1,a-1, r'$f(x)=\frac{tanh(3x) - cot(3x)} {\frac{2x}{5}-{3x}} $',
              color='g', fontsize=20)
+    plt.show()
 
 
-# In[6]:
+# In[8]:
 
 
 opc = int(input("""
@@ -127,3 +128,5 @@ elif(opc == 3):
 elif(opc == 4):
     exit()
 
+
+# ## 
