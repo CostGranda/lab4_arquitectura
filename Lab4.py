@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[2]:
+# In[1]:
 
 
 import matplotlib.pyplot as plt
@@ -11,7 +11,7 @@ from time import sleep
 np.seterr(divide='ignore', invalid='ignore')
 
 
-# In[93]:
+# In[2]:
 
 
 LED1 = 13
@@ -44,7 +44,7 @@ def led_on(led):
     GPIO.cleanup()
 
 
-# In[15]:
+# In[3]:
 
 
 from math import pi
@@ -56,16 +56,17 @@ def valores(a=-0.5, b=0.5):
     return {'x': x, 'y': y, 'puntos': b - a + 1} # Diccionario con los arrays y el delta
 
 
-# In[16]:
+# In[4]:
 
 
 def cuadrantes(a, b, num, cant):
     """Apaga los leds antes de iniciar cada cuadrante por seguridad, anuncia 
     y enciende"""
+    setup_leds()
     if(num<=a+cant):
         leds_off()
         print("Cuadrante 1")
-        led_on(LED1, "on")
+        led_on(LED1)
     elif(num<=a+cant*2):
         leds_off()
         print("Cuadrante 2")
@@ -80,7 +81,7 @@ def cuadrantes(a, b, num, cant):
         led_on(LED4)
 
 
-# In[19]:
+# In[5]:
 
 
 def graficar(a=1,b=1,x=None):
@@ -103,7 +104,7 @@ def graficar(a=1,b=1,x=None):
              color='g', fontsize=20)
 
 
-# In[ ]:
+# In[6]:
 
 
 opc = int(input("""
